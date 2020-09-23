@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+   #PHP Service worker node
+   apiworker:
+     build:
+      context: .
+      dockerfile: Dockerfile-worker
+     image: fuzonmedia/apiworker
+     restart: unless-stopped
+     volumes:
+       - ./app/:/var/www/html
+       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+     working_dir: /var/www/html
+     container_name: apiworker
+     networks:
+       - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true
+
+
+

@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+   #PHP Service
+   api:
+     build:
+      context: .
+      dockerfile: Dockerfile
+     image: fuzonmedia/api
+     restart: unless-stopped
+     ports:
+       - "8080:80"
+     volumes:
+       - ./app/:/var/www/html
+       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+     working_dir: /var/www/html
+     container_name: api
+     networks:
+       - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true
+
+
+
